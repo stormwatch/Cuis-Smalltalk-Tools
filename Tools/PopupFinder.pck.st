@@ -719,11 +719,19 @@ innerMorphClass
 !FinderSearchTextModelMorph methodsFor: 'as yet unclassified' stamp: 'MM 9/25/2020 14:48:53'!
 mouseLeave: evt! !
 
-!FinderSearchInnerTextMorph methodsFor: 'as yet unclassified' stamp: 'HAW 3/21/2025 23:14:54'!
+!FinderSearchInnerTextMorph methodsFor: 'as yet unclassified' stamp: 'HAW 6/29/2026 14:20:00'!
 keyboardFocusChange: aBoolean
-	"Notify change due to green border for keyboard focus"
-	aBoolean ifFalse: [
-		(self firstOwnerSuchThat: [ :m | m class ==  FinderMorph ]) delete ]! !
+	"Notify change due to green border for keyboard focus.
+	Close the popup finder only when keyboard focus leaves it entirely; moving focus
+	to an inner morph such as a catalog tab button must keep the finder open."
+	| finder hand newFocus |
+	aBoolean ifTrue: [ ^ self ].
+	finder := self firstOwnerSuchThat: [ :m | m class == FinderMorph ].
+	finder ifNil: [ ^ self ].
+	hand := self runningWorld ifNotNil: [ :w | w activeHand ].
+	newFocus := hand ifNotNil: [ :h | h keyboardFocus ].
+	(newFocus notNil and: [ newFocus == finder or: [ newFocus hasOwner: finder ] ])
+		ifFalse: [ finder delete ]! !
 
 !Catalog methodsFor: 'accessing' stamp: 'NPM 3/28/2020 02:38:49'!
 name
