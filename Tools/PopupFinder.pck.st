@@ -560,7 +560,7 @@ openOn: aFinder
 		buildMorphicWindow;
 		openInWorld! !
 
-!FinderMorph class methodsFor: 'as yet unclassified' stamp: 'Ez3 12/22/2024 02:30:22'!
+!FinderMorph class methodsFor: 'class initialization private' stamp: 'Ez3 12/22/2024 02:30:22'!
 configureAsClassFinder
 	"self configureAsClassFinder"
 	
@@ -568,15 +568,15 @@ configureAsClassFinder
 
 	! !
 
-!FinderMorph class methodsFor: 'as yet unclassified' stamp: 'MM 9/7/2020 12:10:49'!
+!FinderMorph class methodsFor: 'current finder' stamp: 'MM 9/7/2020 12:10:49'!
 current
 	^ CurrentFinder! !
 
-!FinderMorph class methodsFor: 'as yet unclassified' stamp: 'MM 9/7/2020 12:11:06'!
+!FinderMorph class methodsFor: 'current finder' stamp: 'MM 9/7/2020 12:11:06'!
 current: anInstance
 	CurrentFinder _ anInstance! !
 
-!FinderMorph class methodsFor: 'as yet unclassified' stamp: 'JEC 10/Jan/2026 23:03:46'!
+!FinderMorph class methodsFor: 'current finder' stamp: 'JEC 10/Jan/2026 23:03:46'!
 deleteCurrent
 	CurrentFinder := nil! !
 
