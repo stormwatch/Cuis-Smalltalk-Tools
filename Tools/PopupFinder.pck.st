@@ -613,10 +613,10 @@ registerKeyStrokeHandler
 		setProperty: #'keyStroke:'
 		toValue: [ :event | self processKeyStroke ]! !
 
-!FinderSearchBarMorph methodsFor: 'key stroke handling' stamp: 'NPM 5/9/2020 13:04:54'!
+!FinderSearchBarMorph methodsFor: 'key stroke handling' stamp: 'HAW 3/Nov/2021 21:28:44'!
 unregisterKeyStrokeHandler
 
-	searchBox textMorph
+	searchBox innerTextMorph
 		removeProperty: #'keyStroke:'! !
 
 !FinderSearchBarMorph methodsFor: 'initialization' stamp: 'Ez3 1/28/2025 22:52:36'!
