@@ -421,16 +421,12 @@ processCatalogKey: aKeyboardEvent
 					ifTrue: [model changeSelectedCatalog: catalog. ^ true]]].
 	^ false! !
 
-!FinderMorph methodsFor: 'shortcuts' stamp: 'MM 9/7/2020 12:08:12'!
+!FinderMorph methodsFor: 'shortcuts' stamp: 'JEC 10/Jan/2026 23:05:49'!
 processEscKey: aKeyboardEvent
 
-	(aKeyboardEvent isEsc)
-		ifTrue: [ 
-			model close. 
-			self delete. 
-			self runningWorld activeHand newKeyboardFocus: self runningWorld.
-			FinderMorph current: nil].
-		
+	aKeyboardEvent isEsc
+		ifTrue: [ self delete ].
+
 	^ aKeyboardEvent isEsc! !
 
 !FinderMorph methodsFor: 'shortcuts' stamp: 'JEC 6/Jan/2026 17:21:19'!
@@ -501,12 +497,14 @@ defaultButtonPaneHeight
 defaultColor
 	^ Color veryVeryLightGray! !
 
-!FinderMorph methodsFor: 'as yet unclassified' stamp: 'MM 9/24/2022 10:10:03'!
+!FinderMorph methodsFor: 'submorphs-add/remove' stamp: 'JEC 10/Jan/2026 23:05:21'!
 delete
-	super delete.
-	FinderMorph current: nil.
+
+	model close.
+	self class deleteCurrent.
 	focusFollowsMouse ifTrue: [Preferences at: #focusFollowsMouse put: true].
-	Display restore.! !
+	self runningWorld activeHand newKeyboardFocus: self runningWorld.
+	super delete.! !
 
 !FinderMorph methodsFor: 'as yet unclassified' stamp: 'MM 9/25/2020 14:39:28'!
 handlesKeyboard
@@ -577,6 +575,10 @@ current
 !FinderMorph class methodsFor: 'as yet unclassified' stamp: 'MM 9/7/2020 12:11:06'!
 current: anInstance
 	CurrentFinder _ anInstance! !
+
+!FinderMorph class methodsFor: 'as yet unclassified' stamp: 'JEC 10/Jan/2026 23:03:46'!
+deleteCurrent
+	CurrentFinder := nil! !
 
 !FinderMorph class methodsFor: 'as yet unclassified' stamp: 'MM 9/24/2022 10:20:45'!
 worldMenuOptions
@@ -659,12 +661,12 @@ timeSinceLastKeyStroke
 
 	^ DateAndTime now - dateAndTimeOfLastKeyStroke! !
 
-!FinderSearchBarMorph methodsFor: 'submorphs-add/remove' stamp: 'NPM 5/9/2020 13:04:54'!
-delete
+!FinderSearchBarMorph methodsFor: 'submorphs-add/remove' stamp: 'JEC 10/Jan/2026 23:10:49'!
+clearDependencyAndEvents
 
 	self unregisterKeyStrokeHandler.
-	
-	^ super delete.! !
+
+	^ super clearDependencyAndEvents.! !
 
 !FinderSearchBarMorph methodsFor: 'stepping' stamp: 'HAW 6/30/2020 09:31:12'!
 stepAt: millisecondSinceLast
