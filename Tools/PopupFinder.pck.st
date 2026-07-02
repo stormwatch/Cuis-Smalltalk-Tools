@@ -578,11 +578,6 @@ current
 current: anInstance
 	CurrentFinder _ anInstance! !
 
-!FinderMorph class methodsFor: 'as yet unclassified' stamp: 'MM 9/8/2020 17:48:34'!
-isFindClassShortcut: aKeyboardEvent
-
-	^ aKeyboardEvent shiftPressed and: [ aKeyboardEvent isReturnKey ]! !
-
 !FinderMorph class methodsFor: 'as yet unclassified' stamp: 'MM 9/24/2022 10:20:45'!
 worldMenuOptions
 	^ `{{
