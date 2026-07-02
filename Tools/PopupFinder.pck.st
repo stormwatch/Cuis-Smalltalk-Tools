@@ -1,4 +1,4 @@
-'From Cuis7.3 [latest update: #7087] on 21 March 2025 at 11:17:21 pm'!
+'From Cuis7.9 [latest update: #7983] on 29 June 2026 at 2:20:00 pm'!
 'Description This is a variation of Cuis Finder by Nicolas Papagna, that uses a popup morph as user interface.
 
 Finder is a system-wide search tool for Cuis Smalltalk.
@@ -9,7 +9,7 @@ It is inspired by Pharo''s Spotter and the search feature provided by JetBrains 
 
 Use shift + enter key to open the finder.
 
-tab or left arrow and right arrow keys to change catalog.
+tab key to change catalog (left and right arrow keys move the cursor in the search field).
 
 Also, you can use catalog specific shortcuts:
 
@@ -19,7 +19,7 @@ Also, you can use catalog specific shortcuts:
     alt-s : Selectors catalog.
     alt-p : System categories catalog.
     alt-t : Tools catalog.'!
-!provides: 'PopupFinder' 1 69!
+!provides: 'PopupFinder' 1 70!
 !requires: 'KeyStrokes' 1 65 nil!
 SystemOrganization addCategory: #'PopupFinder-Model'!
 SystemOrganization addCategory: #'PopupFinder-UI'!
@@ -388,17 +388,6 @@ submorphToFocusKeyboard
 
 	^ searchBar searchField! !
 
-!FinderMorph methodsFor: 'events-old protocol' stamp: 'MM 9/7/2020 11:38:33'!
-update: aSymbol
-
-	model
-		isBrowseSelectedResultEvent: aSymbol
-		ifTrue:  [ ^ self closeBoxHit ].
-		
-	model
-		isCloseEvent: aSymbol
-		ifTrue:  [ ^ self closeBoxHit ].! !
-
 !FinderMorph methodsFor: 'shortcuts' stamp: 'MM 9/7/2020 11:38:33'!
 forwardToResults: aKeyboardEvent
 
@@ -406,24 +395,8 @@ forwardToResults: aKeyboardEvent
 		isNil not
 ! !
 
-!FinderMorph methodsFor: 'shortcuts' stamp: 'MM 9/7/2020 20:35:32'!
-processArrowLeftOrRight: aKeyboardEvent 
-	
-	aKeyboardEvent isArrowLeft 
-		ifTrue: [ 
-			model selectPreviousCatalog.
-			^ true ].
-		
-	aKeyboardEvent isArrowRight 
-		ifTrue: [ 
-			model selectNextCatalog.
-			^ true ].
-
-	^ false
-	! !
-
 !FinderMorph methodsFor: 'shortcuts' stamp: 'MM 9/7/2020 11:38:33'!
-processArrowUpOrDown: aKeyboardEvent 
+processArrowUpOrDown: aKeyboardEvent
 	
 	aKeyboardEvent isArrowUp 
 		ifTrue: [ 
@@ -460,18 +433,15 @@ processEscKey: aKeyboardEvent
 		
 	^ aKeyboardEvent isEsc! !
 
-!FinderMorph methodsFor: 'shortcuts' stamp: 'MM 2/6/2021 15:02:02'!
-processKeyStroke: aKeyboardEvent 
-	
+!FinderMorph methodsFor: 'shortcuts' stamp: 'JEC 6/Jan/2026 17:21:19'!
+processKeyStroke: aKeyboardEvent
+
 	(self processTab: aKeyboardEvent)
 		ifTrue: [ ^ true ].
-	
+
 	(self processArrowUpOrDown: aKeyboardEvent)
 		ifTrue: [ ^ true ].
-		
-	(self processArrowLeftOrRight: aKeyboardEvent)
-		ifTrue: [^true].
-		
+
 	(self processReturnKey: aKeyboardEvent)
 		ifTrue: [ ^ true ].
 		
@@ -1221,18 +1191,6 @@ initializeWithAll: aCollectionOfCatalogs
 	self initializeResults.
 	self initializeCatalogs: aCollectionOfCatalogs.	
 	self initializeEventNames.! !
-
-!Finder methodsFor: 'events-old protocol' stamp: 'NPM 4/2/2020 01:04:08'!
-isBrowseSelectedResultEvent: anEvent ifTrue: aBlock
-	
-	anEvent = browseSelectedResultEvent
-		ifTrue: aBlock! !
-
-!Finder methodsFor: 'events-old protocol' stamp: 'NPM 4/20/2020 17:06:25'!
-isCloseEvent: anEvent ifTrue: aBlock
-
-	anEvent = closeEvent
-		ifTrue: aBlock! !
 
 !Finder methodsFor: 'events-old protocol' stamp: 'NPM 4/2/2020 01:05:06'!
 isSelectedCatalogChange: anEvent ifTrue: aBlock
